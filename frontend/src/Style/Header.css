@@ -1,0 +1,62 @@
+.Header{
+    display: flex;
+    justify-content: space-between;
+    background-color: #1357;
+    height: 50px;
+    align-items: center;
+}
+
+.Logo{
+    object-fit: contain;
+    height: 50px;
+    width: 100px;
+}
+
+.Header_Multi_box_1{
+    display: flex;
+    align-items: center;
+    height: 80%;
+    width:50%;
+}
+
+.Header_Multi_box_1 input[type=text] {
+    font-size: 17px;
+    border: none;
+    width: 80%;
+    height: -webkit-fill-available;
+    background: #f1f1f1;
+  }
+
+.Header_Multi_box_1 button {
+    float: left;
+    width: 10%;
+    padding: 10px;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+    height: -webkit-fill-available;
+  }
+
+.Header_Multi_box_1 button:hover {
+    background: #0b7dda;
+}
+
+.Header_Multi_box_2 {
+    display: flex;
+    width: 7%;
+    justify-content: space-between;
+}
+
+.Header_Multi_box_2 > div{
+    height:30px;
+    width: 30px;
+}
+
+.cart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

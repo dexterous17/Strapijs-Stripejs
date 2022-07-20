@@ -1,0 +1,11 @@
+.Product {
+    width: 280px;
+    margin: 50px;
+    border: 1px solid black;
+}
+
+.Product_Image{
+    object-fit: contain;
+    width: -webkit-fill-available;
+    height: 167px;
+}
