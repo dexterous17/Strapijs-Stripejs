@@ -1,25 +1,30 @@
 import React from "react";
 import "./Style/Header.css"
 import companylogo from './Assets/Amazonlogo.png'
-import {FaSearch} from "react-icons/fa";
-import {AiOutlineUser} from 'react-icons/ai'
-import {BsCart} from 'react-icons/bs'
+import { FaSearch } from "react-icons/fa";
+import { AiOutlineUser } from 'react-icons/ai'
+import { BsCart } from 'react-icons/bs'
+import { Link } from "react-router-dom";
 
 export default function Header() {
     return (
         <header className="Header">
             <div className="Header_Multi_box_1">
+            <Link to={'/'}>
                 <img src={companylogo} alt="Logo" className="Logo" />
-                <input type="text" placeholder="Search.." name="search"/>
-                    <button type="submit"><FaSearch/></button>
+            </Link>
+                <input type="text" placeholder="Search.." name="search" />
+                <button type="submit"><FaSearch /></button>
             </div>
             <div className="Header_Multi_box_2">
-            <div className="cart">    
-                <BsCart className="badge" fontSize="1.5em" color="white"/>
-                4
-            </div>
-            <div>    
-                <AiOutlineUser fontSize="1.5em" color="white"/>
+                <div className="cart">
+                    <BsCart className="badge" fontSize="1.5em" color="white" />
+                    4
+                </div>
+                <div>
+                    <Link to={'/Login'}>
+                        <AiOutlineUser fontSize="1.5em" color="white" />
+                    </Link>
                 </div>
             </div>
         </header>

@@ -1,23 +1,28 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router } from 'react-router-dom'
-import "./App.css";
-import Header from "./Header";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import Main from './Main'
-import Footer from './Footer'
 import './Style/Header.css'
 import Login from "./Pages/Login";
 import Cart from "./Pages/Cart";
+import Page404 from "./Pages/Page404";
+import Header from "./Header";
+import Footer from './Footer'
+import Layout from "./Compenent/Layout";
 
 
 export default function App() {
 
-  const [header, setHeader] = useState()
-
   return (
     <>
       <Router>
-        <Header />
-        <Main />
+        <Layout>
+          <Routes>
+            <Route excat path="/" element={<Main />} />
+            <Route path="/Login" element={<Login />} />
+            <Route path="/Cart" element={<Cart />} />
+            <Route path="*" element={<Page404 />} />
+          </Routes>
+        </Layout>
         <Footer />
       </Router>
     </>
