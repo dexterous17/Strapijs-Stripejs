@@ -1,10 +1,14 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import './Style/Product.css'
+import { addtocart } from './reducers/rootReducer'
 
-export default function Product({ Product_image, Product_name, Product_information, Product_price }) {
+export default function Product({ Product_id, Product_image, Product_name, Product_information, Product_price }) {
+
+    const dispatch = useDispatch()
     return (
         <div className="Product">
-            <img className="Product_Image" src={`https://dexterous17-strapijs-stripejs-7xx49gjw2wqr4-1337.githubpreview.dev${Product_image}`} />
+            <img className="Product_Image" src={`https://dexterous17-strapijs-stripejs-7xx49gjw2wqr4-1338.githubpreview.dev${Product_image}`} />
             <div className='Product_name'>
                 <h3>Product name : {
                     Product_name
@@ -20,7 +24,7 @@ export default function Product({ Product_image, Product_name, Product_informati
                     Product_information
                 }</div>
             </div>
-            <button>Add to cart</button>
+            <button onClick={() => dispatch(addtocart(Product_id))}>Add to cart</button>
         </div>
     )
 }

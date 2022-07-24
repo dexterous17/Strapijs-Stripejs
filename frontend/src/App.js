@@ -5,8 +5,7 @@ import './Style/Header.css'
 import Login from "./Pages/Login";
 import Cart from "./Pages/Cart";
 import Page404 from "./Pages/Page404";
-import Header from "./Header";
-import Footer from './Footer'
+import Footer from './Compenent/Footer'
 import Layout from "./Compenent/Layout";
 
 
