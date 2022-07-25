@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../Style/Login.css"
 import Loginform from "../Compenent/Loginform";
 import Register from "../Compenent/Registerform";
+
 export default function Login() {
 
     const [display, setDisplay] = useState(false);

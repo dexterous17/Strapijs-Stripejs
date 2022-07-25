@@ -1,0 +1,11 @@
+.cart-container {
+    display: flex;
+    height: max-content;
+    justify-content: space-around;
+}
+
+.cartitem-container{
+     height: fit-content;
+     justify-content: space-around;
+     justify-content: space-around;
+}

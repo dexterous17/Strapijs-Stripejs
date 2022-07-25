@@ -1,15 +1,18 @@
 .cartitem {
     display: flex;
     height: 100%;
-    padding: 20px;
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-bottom: 20px;
 }
 
 .cartitem-image{
     height:125px;
     width: 130px;
+    object-fit: contain;
 }
 
-.cartitem-container{
+.cartitem-information-container{
     display: flex;
     padding-left: 10px;
     flex-direction: column;
@@ -35,7 +38,7 @@
 
 .cartitem-information-2{
   width: 450px;
-  height:20px;
+  height:100%;
 }
 
 .skeleton {

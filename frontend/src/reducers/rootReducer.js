@@ -1,7 +1,7 @@
 const initState = {
 
-    itemId: []
-
+    itemId: [],
+    user:[]
 }
 
 export const addtocart = (id) => {
@@ -14,11 +14,12 @@ export const addtocart = (id) => {
     }
 }
 
-export const removefromcart = () => {
+export const removefromcart = (id) => {
 
     return {
 
-        type: 'REMOVEFROMCART'
+        type: 'REMOVEFROMCART',
+        payload: id
 
     }
 
@@ -26,32 +27,29 @@ export const removefromcart = () => {
 
 const rootReducer = (state = initState, action) => {
     switch (action.type) {
-        
-        case 'ADDTOCART': 
-        return {
 
-            ...state,
-            itemId: [...state.itemId, action.payload]
+        case 'ADDTOCART':
+            return {
 
-        }
+                ...state,
+                itemId: [...state.itemId, action.payload]
+
+            }
 
         case 'REMOVEFROMCART':
 
-            const index = state.itemId.findIndex(
-
-                (basketItem) => basketItem.id === action.id
-
-            );
-
+            const index = state.itemId.indexOf(action.payload)
+            console.log(`Index ${index} ${state.itemId[index]}`)
+            console.log(state.itemId)
             let NewBasket = [...state.itemId]
 
-            if (index >= 0) {
+            if (index > -1) {
 
                 NewBasket.splice(index, 1);
 
             } else {
 
-                console.warn(`can't remove ${action.id}`)
+                console.warn(`can't remove ${action.payload}`)
 
             }
 

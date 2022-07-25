@@ -7,6 +7,8 @@ export default function Register({ display }) {
 
     const [login, setLogin] = useState()
     const [password, setPassword] = useState()
+    const [confirmpassword,confirmPassword] = useState()
+
 
 
     const validate = Yup.object({

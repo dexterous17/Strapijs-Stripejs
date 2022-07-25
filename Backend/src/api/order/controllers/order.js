@@ -20,7 +20,7 @@ module.exports = createCoreController('api::order.order', (({ strapi }) => ({
     console.log(ctx.request.body)
     const paymentIntent = await stripe.paymentIntents.create({
       amount: calculateOrderAmount(),
-      currency: "eur",
+      currency: "usd",
       automatic_payment_methods: {
         enabled: true,
       },
