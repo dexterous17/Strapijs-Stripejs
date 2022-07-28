@@ -8,54 +8,50 @@ const endpointSecret = "whsec_da974669a0da7b9495ad4773b1235904b25bb60c2c1b32acc6
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-const calculateOrderAmount = () => {
-  // Replace this constant with a calculation of the order's amount
-  // Calculate the order total on the server to prevent
-  // people from directly manipulating the amount on the client
-  return 1400;
-};
 
 module.exports = createCoreController('api::order.order', (({ strapi }) => ({
-  payment: async (ctx) => {
-    console.log(ctx.request.body)
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: calculateOrderAmount(),
-      currency: "usd",
-      automatic_payment_methods: {
-        enabled: true,
-      },
-    });
+  createorder: async (ctx) => {
 
-    ctx.body = JSON.stringify(paymentIntent);
-  },
-  confirmpayment: async (ctx) => {
-    console.log(ctx.request.body)
-    console.log(ctx.header)
-    /**const sig = ctx.request.headers['stripe-signature'];
-
-    let event;
-  
-    try {
-      event = stripe.webhooks.constructEvent(ctx.request.body, sig, endpointSecret);
-    } catch (err) {
-      ctx.throw(400,`Webhook Error ${err.message}`)
-      return;
-    }
-  
-    // Handle the event
-    switch (event.type) {
-      case 'payment_intent.succeeded':
-        const paymentIntent = event.data.object;
-        console.log(paymentIntent)
-        // Then define and call a function to handle the event payment_intent.succeeded
-        break;
-      // ... handle other event types
-      default:
-        console.log(`Unhandled event type ${event.type}`);
-    }
-  
-    // Return a 200 response to acknowledge receipt of the event
-    ctx.response.send();*/
-  }
-})));
+    /** try {
+       const session = await stripe.checkout.sessions.create({
+         payment_method_types: ["card"],
+         mode: "payment",
  
+         line_items: ctx.body.items.map(item => {
+           const storeItem = strapi.db.query('api::product.product').findOne({where:{id:item}})
+           return {
+             price_data: {
+               currency: "usd",
+               product_data: {
+                 name: storeItem.name,
+               },
+               unit_amount: storeItem.priceInCents,
+             },
+             quantity: item.quantity,
+           }
+         }),
+         success_url: `${process.env.CLIENT_URL}/success.html`,
+         cancel_url: `${process.env.CLIENT_URL}/Cart`,
+       })
+       ctx.body({ url: session.url })
+     } catch (e) {
+       ctx.status(500).json({ error: e.message })
+     }*/
+    const Product_id = ctx.request.body
+    console.log(Product_id)
+    console.log(ctx.state.user.id)
+    console.log(ctx.state.user.username)
+
+    const storeItem = await strapi.db.query('api::product.product').findOne({ where: { id: 1 } })
+    const entry = await strapi.db.query('api::order.order').create({
+      data: {
+        hello: 'Hello',
+        user: ctx.state.user.id
+      },
+    })
+    console.log(storeItem)
+
+
+    ctx.body = 'okay'
+  },
+})));

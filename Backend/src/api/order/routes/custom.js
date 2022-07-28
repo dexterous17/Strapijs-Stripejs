@@ -1,21 +1,10 @@
 "use strict";
 module.exports = {
-    routes: [
-      {
-        method: 'POST',
-        path: '/payment',
-        handler: 'order.payment',
-        config:{
-            auth:false,
-        } 
-    },
+  routes: [
     {
       method: 'POST',
-      path: '/webhook',
-      handler: 'order.confirmpayment',
-      config:{
-          auth:false,
-      } 
-  },
-    ],
-  };
+      path: '/createorder',
+      handler: 'order.createorder',
+    }
+  ],
+};

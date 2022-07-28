@@ -1,7 +1,9 @@
 const initState = {
 
     itemId: [],
-    user:[]
+    user:[
+        
+    ]
 }
 
 export const addtocart = (id) => {

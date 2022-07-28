@@ -9,3 +9,9 @@
      justify-content: space-around;
      justify-content: space-around;
 }
+
+.cartitem-button{
+    background-color: blue;
+    height: fit-content;
+    color: white;
+}

@@ -1,13 +1,22 @@
-import React,{ useState } from "react";
-import { Formik, Form, useFormik } from 'formik';
+import React from "react";
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextField } from "./TextField";
 
-export default function Loginform({display}) {
+export default function Login({ display }) {
 
 
-    const [login, setLogin] = useState()
-    const [password, setPassword] = useState()
+    async function fetch(values) {
+        await axios.post('https://dexterous17-strapijs-stripejs-7xx49gjw2wqr4-1338.githubpreview.dev/api/auth/local', {
+            identifier: values.email,
+            password: values.password
+        }).then((data) => {
+            console.log(data)
+        }
+        ).catch(err => {
+            console.error(err)
+        })
+    }
 
 
     const validate = Yup.object({
@@ -19,20 +28,6 @@ export default function Loginform({display}) {
             .required('Password is required'),
     })
 
-    function handleLogin(e) {
-        e.preventDefault();
-        setLogin(e.target.value)
-    }
-
-    function handlePassword(e) {
-        e.preventDefault();
-        setPassword(e.target.value)
-    }
-
-    async function fetch(e) {
-        e.preventDefault();
-
-    }
     return (
         <div className="Login">
             <Formik
@@ -41,16 +36,16 @@ export default function Loginform({display}) {
                     password: '',
                 }}
                 validationSchema={validate}
-                onSubmit={fetch}
+                onSubmit={values => fetch(values)}
             >
                 {formik => (
-                    <div className={`Login_box ${!display?null:'display-deactive'}`}>
+                    <div className={`Login_box ${!display ? null : 'display-deactive'}`}>
                         <h1 className="Login_text">Login</h1>
                         <Form>
-                            <TextField label="Email" name="email" type="email" onChange={handleLogin} />
-                            <TextField label="Password" name="password" type="password" onChange={handlePassword} />
+                            <TextField label="Email" name="email" type="email"/>
+                            <TextField label="Password" name="password" type="password"/>
                             <div className='Login_buttons'>
-                                <button className="btn btn-dark mt-3" type="submit">Register</button>
+                                <button className="btn btn-dark mt-3" type="submit">Login</button>
                                 <button className="btn btn-danger mt-3 ml-3" type="reset">Reset</button>
                             </div>
                         </Form>

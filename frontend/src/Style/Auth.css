@@ -1,10 +1,15 @@
-.Login_Registration{
+.Login_Registration {
     display: flex;
     flex-direction: column;
     position: absolute;
-    top:30%;
+    top: 30%;
     width: 100%;
     align-items: center;
+}
+
+.Auth-form-buttons {
+    display: flex;
+    justify-content: space-between;
 }
 
 .Login {
@@ -15,11 +20,11 @@
 
 
 
-.display-deactive{
+.display-deactive {
     display: none;
 }
 
-.Login_buttons{
+.Login_buttons {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
