@@ -9,49 +9,61 @@ const endpointSecret = "whsec_da974669a0da7b9495ad4773b1235904b25bb60c2c1b32acc6
 const { createCoreController } = require('@strapi/strapi').factories;
 
 
+const calculateOrderAmount = async (items) => {
+  var sum = 0;
+  try {
+    for (const id of items) {
+      const storeItem = await strapi.db.query('api::product.product').findOne({
+        select: ['Product_price'],
+        where: { id: id }
+      })
+      const item = await storeItem
+      sum = item.Product_price + sum
+    }
+    return sum
+  } catch (e) {
+    console.log(e.message)
+    return sum
+  }
+};
+
+
+
+
 module.exports = createCoreController('api::order.order', (({ strapi }) => ({
   createorder: async (ctx) => {
-
-    /** try {
-       const session = await stripe.checkout.sessions.create({
-         payment_method_types: ["card"],
-         mode: "payment",
- 
-         line_items: ctx.body.items.map(item => {
-           const storeItem = strapi.db.query('api::product.product').findOne({where:{id:item}})
-           return {
-             price_data: {
-               currency: "usd",
-               product_data: {
-                 name: storeItem.name,
-               },
-               unit_amount: storeItem.priceInCents,
-             },
-             quantity: item.quantity,
-           }
-         }),
-         success_url: `${process.env.CLIENT_URL}/success.html`,
-         cancel_url: `${process.env.CLIENT_URL}/Cart`,
-       })
-       ctx.body({ url: session.url })
-     } catch (e) {
-       ctx.status(500).json({ error: e.message })
-     }*/
     const Product_id = ctx.request.body
-    console.log(Product_id)
-    console.log(ctx.state.user.id)
-    console.log(ctx.state.user.username)
+    try {
 
-    const storeItem = await strapi.db.query('api::product.product').findOne({ where: { id: 1 } })
-    const entry = await strapi.db.query('api::order.order').create({
-      data: {
-        hello: 'Hello',
-        user: ctx.state.user.id
-      },
-    })
-    console.log(storeItem)
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: await calculateOrderAmount(Product_id),
+        currency: "eur",
+        automatic_payment_methods: {
+          enabled: true,
+        },
+      });
+
+      const entry = await strapi.db.query('api::order.order').create({
+        data: {
+          payment_intent: paymentIntent.id,
+          payment_status: paymentIntent.status,
+          user: ctx.state.user.id,
+          products: Product_id
+        },
+      })
+
+      return (ctx.body = {
+        data:paymentIntent 
+      })
 
 
-    ctx.body = 'okay'
-  },
+    } catch (e) {
+      console.log(e.message)
+    }
+  }, cancleorder: async (ctx) => {
+
+  }, paymentIntentsccess: async (ctx) => {
+      console.log(ctx.request.body.data.object.id)
+      ctx.body='okay'
+  }
 })));

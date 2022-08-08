@@ -12,14 +12,28 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "hello": {
-      "type": "string"
-    },
     "user": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "orders"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product.product"
+    },
+    "session_id": {
+      "type": "string"
+    },
+    "client_reference_id": {
+      "type": "string"
+    },
+    "payment_intent": {
+      "type": "string"
+    },
+    "payment_status": {
+      "type": "string"
     }
   }
 }

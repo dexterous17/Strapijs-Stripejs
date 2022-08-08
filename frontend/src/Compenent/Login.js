@@ -2,16 +2,23 @@ import React from "react";
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextField } from "./TextField";
+import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { adduser } from "../reducers/rootReducer";
+
 
 export default function Login({ display }) {
-
+    
+    const dispatch = useDispatch()
+    
 
     async function fetch(values) {
         await axios.post('https://dexterous17-strapijs-stripejs-7xx49gjw2wqr4-1338.githubpreview.dev/api/auth/local', {
             identifier: values.email,
             password: values.password
         }).then((data) => {
-            console.log(data)
+            console.log(data.data)
+            dispatch(adduser(data.data.jwt,data.data.user.email))
         }
         ).catch(err => {
             console.error(err)

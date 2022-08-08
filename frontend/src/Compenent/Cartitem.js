@@ -38,8 +38,8 @@ export default function Cartitem({ Product_Id }) {
                             }
                         </div>
                         <div className="cartitem-price">
-                            {
-                                product?.attributes.Product_price
+                            ${
+                                 (product?.attributes.Product_price/100)
                             }
                         </div>
                     </div>

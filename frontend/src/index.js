@@ -10,9 +10,7 @@ const store = createStore(rootReducer);
 
 const root = ReactDOM.createRoot(document.getElementById('page-container'));
 root.render(
-  <React.StrictMode>
     <Provider store={store}>
       <App />
     </Provider>
-  </React.StrictMode>
 );

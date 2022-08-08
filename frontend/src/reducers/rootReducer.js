@@ -1,9 +1,10 @@
 const initState = {
 
     itemId: [],
-    user:[
-        
-    ]
+    user: {
+        jwt: "",
+        email: ""
+    }
 }
 
 export const addtocart = (id) => {
@@ -26,6 +27,25 @@ export const removefromcart = (id) => {
     }
 
 }
+
+export const adduser = (jwt, email) => {
+
+    return {
+        type: 'ADDUSER',
+        jwt: jwt,
+        email: email
+    }
+
+}
+
+export const removeuser = () => {
+
+    return {
+        type: 'REMOVEUSER'
+    }
+
+}
+
 
 const rootReducer = (state = initState, action) => {
     switch (action.type) {
@@ -62,8 +82,26 @@ const rootReducer = (state = initState, action) => {
 
             }
 
-        default:
+        case 'ADDUSER':
+            console.log(action.jwt,action.email)
+            return {
+                ...state,
+                user: {
+                    jwt: action.jwt,
+                    email: action.email
+                }
+            }
 
+        case 'REMOVEUSER':
+            return {
+                ...state,
+                user: {
+                    jwt:"",
+                    email:""
+                }
+            }
+        
+        default:
             return state
     }
 }

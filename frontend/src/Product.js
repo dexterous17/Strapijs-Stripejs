@@ -15,8 +15,8 @@ export default function Product({ Product_id, Product_image, Product_name, Produ
                 }</h3>
             </div>
             <div className='Product_price'>
-                <div>Product Price : {
-                    Product_price
+                <div>Product Price : $ {
+                    (Product_price/100)
                 }</div>
             </div>
             <div className='Product_information'>
