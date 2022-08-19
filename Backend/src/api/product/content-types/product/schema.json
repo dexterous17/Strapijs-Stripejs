@@ -31,6 +31,12 @@
     },
     "Product_information": {
       "type": "richtext"
+    },
+    "ordersfromusers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::ordersfromuser.ordersfromuser",
+      "mappedBy": "product"
     }
   }
 }

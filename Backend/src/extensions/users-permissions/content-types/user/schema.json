@@ -68,6 +68,12 @@
       "relation": "oneToMany",
       "target": "api::order.order",
       "mappedBy": "user"
+    },
+    "ordersfromusers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::ordersfromuser.ordersfromuser",
+      "mappedBy": "user"
     }
   }
 }

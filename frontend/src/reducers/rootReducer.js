@@ -1,6 +1,6 @@
 const initState = {
 
-    itemId: [],
+    cartItems: [],
     user: {
         jwt: "",
         email: ""
@@ -51,19 +51,51 @@ const rootReducer = (state = initState, action) => {
     switch (action.type) {
 
         case 'ADDTOCART':
+
+            if (!state.cartItems.find(item => item.itemid === action.payload)) {
+                let item = [...state.cartItems]
+                item.push({
+                    itemid: action.payload,
+                    quantity: 1
+                })
+
+                console.log(item)
+                return {
+                    ...state,
+                    cartItems: [...item]
+                }
+            }
+
+
+            if (state.cartItems.find(item => item.itemid === action.payload)) {
+
+                var newcartitems = state.cartItems
+                const index = state.cartItems.findIndex(object => object.itemid === action.payload)
+                console.log(index)
+
+                newcartitems[index].quantity = newcartitems[index].quantity + 1
+                console.log(state.cartItems)
+                return {
+                    ...state,
+                    cartItems: [...newcartitems]
+                }
+            }
+
+
+            console.log(state.cartItems)
+
             return {
 
                 ...state,
-                itemId: [...state.itemId, action.payload]
+                cartItems: [...state.cartItems, action.payload]
 
             }
 
         case 'REMOVEFROMCART':
 
-            const index = state.itemId.indexOf(action.payload)
-            console.log(`Index ${index} ${state.itemId[index]}`)
-            console.log(state.itemId)
-            let NewBasket = [...state.itemId]
+            const index = state.cartItems.findIndex(object => object.itemid === action.payload)
+            
+            let NewBasket = [...state.cartItems]
 
             if (index > -1) {
 
@@ -78,12 +110,24 @@ const rootReducer = (state = initState, action) => {
             return {
 
                 ...state,
-                itemId: NewBasket
+                cartItems: NewBasket
+
+            }
+
+        case 'INCREASEPRODUCTAMOUNT':
+
+            return {
+
+            }
+
+        case 'DECREASEPRODUCTAMOUNT':
+
+            return {
 
             }
 
         case 'ADDUSER':
-            console.log(action.jwt,action.email)
+            console.log(action.jwt, action.email)
             return {
                 ...state,
                 user: {
@@ -96,11 +140,11 @@ const rootReducer = (state = initState, action) => {
             return {
                 ...state,
                 user: {
-                    jwt:"",
-                    email:""
+                    jwt: "",
+                    email: ""
                 }
             }
-        
+
         default:
             return state
     }

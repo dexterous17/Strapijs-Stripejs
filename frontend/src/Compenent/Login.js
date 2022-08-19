@@ -1,24 +1,26 @@
 import React from "react";
-import { Formik, Form } from 'formik';
+import { Formik, Form, connect } from 'formik';
 import * as Yup from 'yup';
 import { TextField } from "./TextField";
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { adduser } from "../reducers/rootReducer";
+import CheckFilled from "./CheckFilled";
 
 
 export default function Login({ display }) {
-    
+
     const dispatch = useDispatch()
-    
+
 
     async function fetch(values) {
+        console.log(values)
         await axios.post('https://dexterous17-strapijs-stripejs-7xx49gjw2wqr4-1338.githubpreview.dev/api/auth/local', {
             identifier: values.email,
             password: values.password
         }).then((data) => {
             console.log(data.data)
-            dispatch(adduser(data.data.jwt,data.data.user.email))
+            dispatch(adduser(data.data.jwt, data.data.user.email))
         }
         ).catch(err => {
             console.error(err)
@@ -41,6 +43,7 @@ export default function Login({ display }) {
                 initialValues={{
                     email: '',
                     password: '',
+                    toggle: false
                 }}
                 validationSchema={validate}
                 onSubmit={values => fetch(values)}
@@ -49,8 +52,9 @@ export default function Login({ display }) {
                     <div className={`Login_box ${!display ? null : 'display-deactive'}`}>
                         <h1 className="Login_text">Login</h1>
                         <Form>
-                            <TextField label="Email" name="email" type="email"/>
-                            <TextField label="Password" name="password" type="password"/>
+                            <TextField label="Email" name="email" type="email" />
+                            <TextField label="Password" name="password" type="password" />
+                            <CheckFilled label="Remember me" name="toggle" type="checkbox" />
                             <div className='Login_buttons'>
                                 <button className="btn btn-dark mt-3" type="submit">Login</button>
                                 <button className="btn btn-danger mt-3 ml-3" type="reset">Reset</button>

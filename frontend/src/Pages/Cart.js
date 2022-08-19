@@ -5,7 +5,7 @@ import Cartitem from "../Compenent/Cartitem";
 import '../Style/Cart.css'
 export default function Cart() {
 
-    const Cartitems = useSelector(state => state.itemId)
+    const Cartitems = useSelector(state => state.cartItems)
 
     if (Cartitems.length === 0) {
         return (

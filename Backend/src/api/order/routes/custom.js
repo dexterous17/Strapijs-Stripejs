@@ -15,6 +15,11 @@ module.exports = {
       method: 'POST',
       path: '/paymentIntentsccess',
       handler: 'order.paymentIntentsccess',
+    },
+    {
+      method: 'POST',
+      path: '/getorderinformationbasedoonpuymentintent',
+      handler: 'order.getorderinformationbasedoonpuymentintent',
     }
   ],
 };

@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ordersfromusers",
+  "info": {
+    "singularName": "ordersfromuser",
+    "pluralName": "ordersfromusers",
+    "displayName": "Ordersfromuser",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "quantity": {
+      "type": "integer"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "ordersfromusers"
+    },
+    "product": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::product.product",
+      "inversedBy": "ordersfromusers"
+    }
+  }
+}

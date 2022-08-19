@@ -13,9 +13,10 @@ const stripePromise = loadStripe("pk_test_51Hps8SLAex9slWfOAXlFNdVr9OI4efh6l2dFk
 
 export default function Checkout() {
   const [clientSecret, setClientSecret] = useState();
-  const Cartitems = useSelector(state => state.itemId)
+  const Cartitems = useSelector(state => state.cartItems)
+  const token = useSelector(state => state.user.jwt)
   let headersList = {
-    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjU5MzE4ODgwLCJleHAiOjE2NjE5MTA4ODB9.G24dmvqG5DlTagaefRzVRLIjHPTimgEsdRYWH860ISE",
+    "Authorization": `Bearer  ${token}`,
     "Content-Type": "application/json"
   }
 

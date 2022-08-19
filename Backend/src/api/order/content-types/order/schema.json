@@ -18,22 +18,19 @@
       "target": "plugin::users-permissions.user",
       "inversedBy": "orders"
     },
-    "products": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::product.product"
-    },
-    "session_id": {
-      "type": "string"
-    },
-    "client_reference_id": {
-      "type": "string"
-    },
     "payment_intent": {
       "type": "string"
     },
     "payment_status": {
       "type": "string"
+    },
+    "payment_amount": {
+      "type": "float"
+    },
+    "ordersfromusers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::ordersfromuser.ordersfromuser"
     }
   }
 }

@@ -7,14 +7,14 @@ import { useSelector } from "react-redux";
 
 export default function Cartitem({ Product_Id }) {
 
-    const Cartitems = useSelector(state => state.itemId)
+    const Cartitems = useSelector(state => state.cartItems)
 
     const dispatch = useDispatch()
     const [product, setProduct] = useState()
 
     const fetch = async () => {
         try {
-            const response = await axios.get(`https://dexterous17-strapijs-stripejs-7xx49gjw2wqr4-1338.githubpreview.dev/api/products/${Product_Id}?populate=*`)
+            const response = await axios.get(`https://dexterous17-strapijs-stripejs-7xx49gjw2wqr4-1338.githubpreview.dev/api/products/${Product_Id.itemid}?populate=*`)
             setProduct(response.data.data)
         } catch (error) {
             throw Error(error)
@@ -49,7 +49,7 @@ export default function Cartitem({ Product_Id }) {
                         }
                     </div>
                 </div>
-                <button onClick={() => dispatch(removefromcart(Product_Id))} />
+                <button onClick={() => dispatch(removefromcart(Product_Id.id))} />
             </div>
         )
     } else {
