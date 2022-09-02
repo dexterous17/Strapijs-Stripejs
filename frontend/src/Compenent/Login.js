@@ -21,6 +21,7 @@ export default function Login({ display }) {
         }).then((data) => {
             console.log(data.data)
             dispatch(adduser(data.data.jwt, data.data.user.email))
+            localStorage.setItem('jwt', data.data.jwt)
         }
         ).catch(err => {
             console.error(err)

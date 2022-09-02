@@ -20,6 +20,11 @@ export default function Header() {
             </div>
             <div className="Header_Multi_box_2">
                 <div className="cart">
+                <div>
+                    <Link to={'/Orders'}>
+                        Orders
+                    </Link>
+                </div>
                 <Link to={'/Cart'}>
                     <BsCart className="badge" fontSize="1.5em" color="white" />
                     {

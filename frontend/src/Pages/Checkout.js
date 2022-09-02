@@ -32,7 +32,6 @@ export default function Checkout() {
 
     await axios.request(reqOptions)
       .then((data) => {
-        console.log(data.data.data.client_secret)
         setClientSecret(data.data.data.client_secret)
       });
   }
@@ -41,7 +40,7 @@ export default function Checkout() {
     if (!clientSecret) {
       fetch()
     }
-    return () => {}
+    return () => { }
   })
 
 
@@ -53,7 +52,7 @@ export default function Checkout() {
     appearance,
   };
 
-  
+
 
   return (
     <div className="App">

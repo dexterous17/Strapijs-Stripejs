@@ -19,7 +19,7 @@ const CheckoutForm = () => {
       //`Elements` instance that was used to create the Payment Element
       elements,
       confirmParams: {
-        return_url: "https://example.com/order/123/complete",
+        return_url: "https://dexterous17-strapijs-stripejs-7xx49gjw2wqr4-3000.githubpreview.dev/Success",
       },
     });
 
