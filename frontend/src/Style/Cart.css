@@ -4,14 +4,35 @@
     justify-content: space-around;
 }
 
-.cartitem-container{
-     height: fit-content;
-     justify-content: space-around;
-     justify-content: space-around;
+.cartitem-container {
+    height: fit-content;
+    justify-content: space-around;
+    justify-content: space-around;
 }
 
-.cartitem-button{
-    background-color: blue;
+.cartitem-button {
+    background-color: greenyellow;
+    height: -moz-fit-content;
     height: fit-content;
     color: white;
+    position: relative;
+    top: 300px;
+    height: 30px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cartitem-button>a {
+    text-decoration-line: none;
+}
+
+
+.no_cart_item {
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }

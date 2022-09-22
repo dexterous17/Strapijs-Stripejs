@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik, Form, connect } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextField } from "./TextField";
 import axios from 'axios'

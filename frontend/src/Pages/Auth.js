@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import "../Style/Auth.css"
 import Login from "../Compenent/Login";
 import Register from "../Compenent/Register";
+import { Navigate } from "react-router-dom";
 
 export default function Auth() {
-
+    const token = localStorage.getItem('jwt')
     const [display, setDisplay] = useState(false);
 
 
@@ -16,18 +17,22 @@ export default function Auth() {
         }
     }
 
-    return (
-        <div className="Login_Registration">
-            <div className="">
-                <div className="Auth-form-buttons">
-                    <button onClick={handlechange}>Login</button>
-                    <button onClick={handlechange}>Registration</button>
-                </div>
-                <div>
-                    <Login display={display} />
-                    <Register display={display} />
+    if (token) {
+        return <Navigate to="/Profile" replace={false} />
+    } else {
+        return (
+            <div className="Login_Registration">
+                <div className="">
+                    <div className="Auth-form-buttons">
+                        <button onClick={handlechange}>Login</button>
+                        <button onClick={handlechange}>Registration</button>
+                    </div>
+                    <div>
+                        <Login display={display} />
+                        <Register display={display} />
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
 }

@@ -20,6 +20,10 @@ module.exports = {
       method: 'POST',
       path: '/getorderinformationbasedoonpuymentintent',
       handler: 'order.getorderinformationbasedoonpuymentintent',
+    }, {
+      method: 'POST',
+      path: '/getmutipleorder',
+      handler: 'order.getmutipleorder',
     }
   ],
 };

@@ -2,7 +2,7 @@ const initState = {
 
     cartItems: [],
     user: {
-        jwt: "",
+        jwt: '',
         email: ""
     }
 }
@@ -46,8 +46,22 @@ export const removeuser = () => {
 
 }
 
+export const removequantity = (id) => {
+    return {
+        type: 'REMOVEQUANTITY',
+        payload: id
+    }
+}
+
+export const addquantity = (id) => {
+    return {
+        type: 'ADDQUANTITY',
+        payload: id
+    }
+}
 
 const rootReducer = (state = initState, action) => {
+    var newcartitems = state.cartItems
     switch (action.type) {
 
         case 'ADDTOCART':
@@ -55,7 +69,7 @@ const rootReducer = (state = initState, action) => {
             if (!state.cartItems.find(item => item.itemid === action.payload)) {
                 let item = [...state.cartItems]
                 item.push({
-                    itemid: action.payload,
+                    ...action.payload,
                     quantity: 1
                 })
 
@@ -68,22 +82,16 @@ const rootReducer = (state = initState, action) => {
 
 
             if (state.cartItems.find(item => item.itemid === action.payload)) {
-
-                var newcartitems = state.cartItems
                 const index = state.cartItems.findIndex(object => object.itemid === action.payload)
-                console.log(index)
+
 
                 newcartitems[index].quantity = newcartitems[index].quantity + 1
-                console.log(state.cartItems)
+
                 return {
                     ...state,
                     cartItems: [...newcartitems]
                 }
             }
-
-
-            console.log(state.cartItems)
-
             return {
 
                 ...state,
@@ -92,9 +100,9 @@ const rootReducer = (state = initState, action) => {
             }
 
         case 'REMOVEFROMCART':
-
+            console.log(action.payload)
             const index = state.cartItems.findIndex(object => object.itemid === action.payload)
-            
+
             let NewBasket = [...state.cartItems]
 
             if (index > -1) {
@@ -114,16 +122,53 @@ const rootReducer = (state = initState, action) => {
 
             }
 
-        case 'INCREASEPRODUCTAMOUNT':
+        case 'ADDQUANTITY':
+            if (state.cartItems.find(item => item.itemid === action.payload)) {
 
+                const index = state.cartItems.findIndex(object => object.itemid === action.payload)
+                console.log(index)
+
+                newcartitems[index].quantity = newcartitems[index].quantity + 1
+                console.log(state)
+                return {
+                    ...state,
+                    cartItems: [...newcartitems]
+                }
+            }
             return {
-
+                ...state
             }
 
-        case 'DECREASEPRODUCTAMOUNT':
+        case 'REMOVEQUANTITY':
+            console.log(action.payload)
 
+
+            if (state.cartItems.find(item => item.itemid === action.payload)) {
+                const index = state.cartItems.findIndex(object => object.itemid === action.payload)
+                console.log(index)
+                if (state.cartItems[index].quantity > 1) {
+                    newcartitems[index].quantity = newcartitems[index].quantity - 1
+                    return {
+                        ...state,
+                        cartItems: [...newcartitems]
+                    }
+                } else {
+                    if (index > -1 && state.cartItems[index].quantity === 1) {
+
+                        newcartitems.splice(index, 1);
+                        return {
+                            ...state,
+                            cartItems: [...newcartitems]
+                        }
+                    } else {
+
+                        console.warn(`can't remove ${action.payload}`)
+
+                    }
+                }
+            }
             return {
-
+                ...state
             }
 
         case 'ADDUSER':
@@ -137,6 +182,7 @@ const rootReducer = (state = initState, action) => {
             }
 
         case 'REMOVEUSER':
+            localStorage.removeItem('jwt')
             return {
                 ...state,
                 user: {

@@ -1,0 +1,31 @@
+.success_order>.success_order_container>div {
+    padding-bottom: 5px;
+}
+
+.success_order_container {
+    background-color: #E7E9EB;
+}
+
+.success_order {
+    display: flex;
+    position: absolute;
+    top: 15%;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Success_product>div {
+    padding-bottom: 5px;
+    
+}
+
+.success_order_title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.success_order_footer {
+    display: flex;
+    justify-content: space-between;
+}

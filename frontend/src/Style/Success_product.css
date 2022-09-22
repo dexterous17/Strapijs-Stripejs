@@ -1,0 +1,25 @@
+.Success_product_container {
+    display: flex;
+    width: auto;
+    height: auto;
+    justify-content: space-between;
+}
+
+.Success_product_container>.Success_product_container_image {
+    object-fit: contain;
+    height: 150px;
+    width: 200px;
+}
+
+
+
+.Success_product_container>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+}
+
+.Success_product_container>div>div {
+    background-color: aliceblue;
+}

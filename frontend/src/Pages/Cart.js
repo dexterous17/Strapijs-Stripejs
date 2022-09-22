@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Cartitem from "../Compenent/Cartitem";
+import { Memocartitem } from "../Compenent/Memocartitem";
 import '../Style/Cart.css'
 export default function Cart() {
 
@@ -9,7 +9,7 @@ export default function Cart() {
 
     if (Cartitems.length === 0) {
         return (
-            <div>No Item in Cart</div>
+            <div className="no_cart_item">No Item in Cart</div>
         )
     } else {
         return (
@@ -17,7 +17,7 @@ export default function Cart() {
                 <div className="cartitem-container">
                     {
                         Cartitems.map((item, _) => {
-                            return (<Cartitem key={_} Product_Id={item} />)
+                            return (<Memocartitem key={_} Product_Id={item.itemid} quantity={item.quantity} />)
                         })
                     }
                 </div>

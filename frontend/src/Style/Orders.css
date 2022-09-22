@@ -1,0 +1,14 @@
+.Orders_container {
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.no_order {
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}

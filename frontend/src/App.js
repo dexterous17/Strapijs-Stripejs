@@ -11,10 +11,10 @@ import Footer from './Compenent/Footer'
 import Sucesss from "./Pages/Success";
 import './Style/App.css'
 import Orders from "./Pages/Orders";
-
+import Protectpage from "./Compenent/Protectpage";
+import Profile from "./Pages/Profile";
 
 export default function App() {
-
   return (
     <>
       <Router>
@@ -24,9 +24,10 @@ export default function App() {
             <Route excat path="/" element={<Main />} />
             <Route path="/Login" element={<Auth />} />
             <Route path="/Cart" element={<Cart />} />
-            <Route path="/Checkout" element={<Checkout />} />
-            <Route path="/Success" element={<Sucesss />} />
-            <Route path="/Orders" element={<Orders/>} />
+            <Route path="/Checkout" element={<Protectpage><Checkout /></Protectpage>} />
+            <Route path="/Success" element={<Protectpage><Sucesss /></Protectpage>} />
+            <Route path="/Orders" element={<Protectpage><Orders /></Protectpage>} />
+            <Route path="/Profile" element={<Protectpage><Profile /></Protectpage>} />
             <Route path="*" element={<Page404 />} />
           </Routes>
         </div>

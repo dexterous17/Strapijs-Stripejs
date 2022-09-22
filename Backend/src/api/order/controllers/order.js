@@ -91,6 +91,21 @@ module.exports = createCoreController('api::order.order', (({ strapi }) => ({
 
 
 
+  }, getmutipleorder: async (ctx) => {
+    const data = await strapi.db.query('api::order.order').findMany({
+      where: {
+        user: ctx.state.user.id,
+        payment_status: 'payment_intent.succeeded'
+      },
+      populate: { ordersfromusers: { populate: { product: { populate: { populate: { relation: true } } } } } }
+
+
+    })
+
+    console.log(data)
+    return (ctx.body = {
+      data: data
+    })
   }
 
 })));

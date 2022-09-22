@@ -46,6 +46,11 @@
     animation: skeleton-loading 1s linear infinite alternate;
 }
 
+.Cart_product_button{
+    display: flex;
+    justify-content: space-between;
+}
+
 @keyframes skeleton-loading {
     0% {
         background-color: hsl(200, 20%, 70%);

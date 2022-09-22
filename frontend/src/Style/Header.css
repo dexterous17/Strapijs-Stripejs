@@ -1,4 +1,4 @@
-.Header{
+.Header {
     display: flex;
     justify-content: space-between;
     background-color: #1357;
@@ -7,17 +7,17 @@
     align-items: center;
 }
 
-.Logo{
+.Logo {
     object-fit: contain;
     height: 50px;
     width: 100px;
 }
 
-.Header_Multi_box_1{
+.Header_Multi_box_1 {
     display: flex;
     align-items: center;
     height: 80%;
-    width:50%;
+    width: 50%;
 }
 
 .Header_Multi_box_1 input[type=text] {
@@ -26,7 +26,7 @@
     width: 80%;
     height: -webkit-fill-available;
     background: #f1f1f1;
-  }
+}
 
 .Header_Multi_box_1 button {
     float: left;
@@ -39,7 +39,7 @@
     border-left: none;
     cursor: pointer;
     height: -webkit-fill-available;
-  }
+}
 
 .Header_Multi_box_1 button:hover {
     background: #0b7dda;
@@ -47,16 +47,11 @@
 
 .Header_Multi_box_2 {
     display: flex;
-    width: 7%;
+    width: 150px;
     justify-content: space-between;
 }
 
-.Header_Multi_box_2 > div{
-    height:30px;
-    width: 30px;
-}
-
-.cart{
+.cart {
     display: flex;
     justify-content: center;
     align-items: center;

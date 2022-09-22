@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import axios from 'axios'
 import MoonLoader from "react-spinners/MoonLoader";
 import Success_product from "../Compenent/Success_product";
+import '../Style/Sucess.css'
 
 export default function Sucesss() {
     const search = useLocation().search;
@@ -22,23 +23,20 @@ export default function Sucesss() {
         data: { payment_intent },
     }
 
-    const fetch = async () => {
-        const response = await axios.request(reqOptions)
-        setOrder(response.data.data)
-
-    }
-
     useEffect(() => {
+        const fetch = async () => {
+            const response = await axios.request(reqOptions)
+            setOrder(response.data.data)
+
+        }
 
         fetch()
-
-
     }, [])
 
     if (order) {
         return (
-            <>
-                <div className="success_order">
+            <div className="success_order">
+                <div className="success_order_container">
                     <div className="success_order_title">
                         <div>
                             Order Id {order?.id}
@@ -47,19 +45,21 @@ export default function Sucesss() {
                             Order Created at {order?.updatedAt}
                         </div>
                     </div>
+                    <div className="Success_product">
+                        {
+                            order?.ordersfromusers.map(product => <Success_product key={product?.id} product={product?.product} quantity={product?.quantity} />)
+                        }
+                    </div>
+                    <div className="success_order_footer">
+                        <div>
+                            Total Different Product {order.ordersfromusers.length}
+                        </div>
+                        <div>
+                            Payment Amount : $ {(order.payment_amount / 100)}
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    {
-                        order?.ordersfromusers.map(product => <Success_product key={product?.id} product={product?.product} quantity={product?.quantity} />)
-                    }
-                </div>
-                <div>
-                    Total Different Product {order.ordersfromusers.length}
-                </div>
-                <div>
-                    Payment Amount : $ {(order.payment_amount / 100)}
-                </div>
-            </>
+            </div>
         )
     } else {
         return (

@@ -5,32 +5,34 @@ import { FaSearch } from "react-icons/fa";
 import { AiOutlineUser } from 'react-icons/ai'
 import { BsCart } from 'react-icons/bs'
 import { Link } from "react-router-dom";
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 export default function Header() {
-    const cartlength = useSelector(state => state.cartItems.length )
+    const cartlength = useSelector(state => state.cartItems.length)
     return (
         <header className="Header">
             <div className="Header_Multi_box_1">
-            <Link to={'/'}>
-                <img src={companylogo} alt="Logo" className="Logo" />
-            </Link>
+                <Link to={'/'}>
+                    <img src={companylogo} alt="Logo" className="Logo" />
+                </Link>
                 <input type="text" placeholder="Search.." name="search" />
                 <button type="submit"><FaSearch /></button>
             </div>
             <div className="Header_Multi_box_2">
-                <div className="cart">
-                <div>
-                    <Link to={'/Orders'}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Link to={'/Orders'} style={{ textDecoration: 'none' }}>
                         Orders
                     </Link>
                 </div>
-                <Link to={'/Cart'}>
-                    <BsCart className="badge" fontSize="1.5em" color="white" />
-                    {
-                        cartlength
-                    }
-                </Link>
+                <div className="cart">
+                    <Link to={'/Cart'} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <BsCart className="badge" fontSize="1.5em" color="white" />
+                        <div>
+                            {
+                                cartlength
+                            }
+                        </div>
+                    </Link>
                 </div>
                 <div>
                     <Link to={'/Login'}>

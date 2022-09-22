@@ -1,11 +1,31 @@
+main {
+    background-color: #E7E9EB;
+}
+
 .Product {
     width: 280px;
     margin: 50px;
-    border: 1px solid black;
+    background: #a9cdcf;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.Product_Image{
+.Product_Image {
     object-fit: contain;
     width: -webkit-fill-available;
     height: 167px;
+}
+
+.Product_button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
 }
