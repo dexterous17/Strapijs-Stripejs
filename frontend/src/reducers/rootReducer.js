@@ -1,5 +1,4 @@
 const initState = {
-
     cartItems: [],
     user: {
         jwt: '',
@@ -66,14 +65,13 @@ const rootReducer = (state = initState, action) => {
 
         case 'ADDTOCART':
 
-            if (!state.cartItems.find(item => item.itemid === action.payload)) {
+            if (!state.cartItems.find(item => item.itemid === action.payload.itemid)) {
                 let item = [...state.cartItems]
                 item.push({
                     ...action.payload,
                     quantity: 1
                 })
 
-                console.log(item)
                 return {
                     ...state,
                     cartItems: [...item]
@@ -81,8 +79,8 @@ const rootReducer = (state = initState, action) => {
             }
 
 
-            if (state.cartItems.find(item => item.itemid === action.payload)) {
-                const index = state.cartItems.findIndex(object => object.itemid === action.payload)
+            if (state.cartItems.find(item => item.itemid === action.payload.itemid)) {
+                const index = state.cartItems.findIndex(object => object.itemid === action.payload.itemid)
 
 
                 newcartitems[index].quantity = newcartitems[index].quantity + 1
@@ -100,7 +98,7 @@ const rootReducer = (state = initState, action) => {
             }
 
         case 'REMOVEFROMCART':
-            console.log(action.payload)
+
             const index = state.cartItems.findIndex(object => object.itemid === action.payload)
 
             let NewBasket = [...state.cartItems]
@@ -140,7 +138,7 @@ const rootReducer = (state = initState, action) => {
             }
 
         case 'REMOVEQUANTITY':
-            console.log(action.payload)
+
 
 
             if (state.cartItems.find(item => item.itemid === action.payload)) {
@@ -171,8 +169,7 @@ const rootReducer = (state = initState, action) => {
                 ...state
             }
 
-        case 'ADDUSER':
-            console.log(action.jwt, action.email)
+        case 'ADDUSER': 
             return {
                 ...state,
                 user: {

@@ -6,7 +6,7 @@ import '../Style/Cart.css'
 export default function Cart() {
 
     const Cartitems = useSelector(state => state.cartItems)
-
+    console.log(Cartitems)
     if (Cartitems.length === 0) {
         return (
             <div className="no_cart_item">No Item in Cart</div>
@@ -17,7 +17,7 @@ export default function Cart() {
                 <div className="cartitem-container">
                     {
                         Cartitems.map((item, _) => {
-                            return (<Memocartitem key={_} Product_Id={item.itemid} quantity={item.quantity} />)
+                            return (<Memocartitem key={_} itemid={item.itemid} name={item.productName} price={item.price} information={item.information} quantity={item.quantity} image={item.image} />)
                         })
                     }
                 </div>

@@ -23,7 +23,7 @@ const Product = ({ id, image, name, information, price }) => {
                     information
                 }</div>
             </div>
-            <button className="Product_button" onClick={() => dispatch(addtocart({ itemid: id, productName: name, price: price, information: information }))}>Add to cart</button>
+            <button className="Product_button" onClick={() => dispatch(addtocart({ itemid: id, productName: name, price: price, information: information, image: image }))}>Add to cart</button>
         </div>
     )
 }

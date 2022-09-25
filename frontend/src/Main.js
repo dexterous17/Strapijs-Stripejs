@@ -18,9 +18,6 @@ export default function Main() {
         }
     }
 
-    console.log(`render`)
-
-
     useLayoutEffect(() => {
         fetch()
 
@@ -41,9 +38,6 @@ export default function Main() {
                         size={100}
                         speedMultiplier={1}
                     />
-            }
-            {
-                console.log(`render main`)
             }
         </main>
     )

@@ -51,6 +51,12 @@
     justify-content: space-between;
 }
 
+.cart-product {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
 @keyframes skeleton-loading {
     0% {
         background-color: hsl(200, 20%, 70%);
