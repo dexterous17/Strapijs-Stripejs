@@ -4,7 +4,15 @@ import '../Style/Footer.css'
 export default function Footer() {
   return (
     <footer>
-        Hello
+      <div>
+        About us
+      </div>
+      <div>
+        Terms and conditions
+      </div>
+      <div>
+        Privacy policy
+      </div>
     </footer>
   );
 }

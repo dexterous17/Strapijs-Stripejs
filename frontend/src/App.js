@@ -12,7 +12,7 @@ import Sucesss from "./Pages/Success";
 import './Style/App.css'
 import Orders from "./Pages/Orders";
 import Protectpage from "./Compenent/Protectpage";
-import Profile from "./Pages/Profile";
+import Profile from "./Pages/Profile/Profile";
 
 export default function App() {
   return (

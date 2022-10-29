@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextField } from "./TextField";
@@ -11,7 +12,7 @@ import CheckFilled from "./CheckFilled";
 export default function Login({ display }) {
 
     const dispatch = useDispatch()
-
+    const navigate = useNavigate();
 
     async function fetch(values) {
         console.log(values)
@@ -19,9 +20,9 @@ export default function Login({ display }) {
             identifier: values.email,
             password: values.password
         }).then((data) => {
-            console.log(data.data)
             dispatch(adduser(data.data.jwt, data.data.user.email))
             localStorage.setItem('jwt', data.data.jwt)
+            navigate('/Profile')
         }
         ).catch(err => {
             console.error(err)

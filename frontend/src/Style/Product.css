@@ -2,6 +2,11 @@ main {
     background-color: #E7E9EB;
 }
 
+.Profile {
+    display: flex;
+    justify-content: space-between;
+}
+
 .Product {
     width: 280px;
     margin: 50px;
@@ -28,4 +33,14 @@ main {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+}
+
+.Profiledata {
+    width: 50%;
+}
+
+.Profiledata>div>div {
+    display: flex;
+    justify-content: space-between;
+
 }

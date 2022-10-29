@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextField } from "./TextField";
@@ -38,7 +38,7 @@ export default function Register({ display }) {
                 initialValues={{
                     email: '',
                     password: '',
-                    confirmPassword:''
+                    confirmPassword: ''
                 }}
                 validationSchema={validate}
                 onSubmit={values => fetch(values)}
@@ -49,7 +49,7 @@ export default function Register({ display }) {
                         <Form>
                             <TextField label="Email" name="email" type="email" />
                             <TextField label="Password" name="password" type="password" />
-                            <TextField label="Confirm Password" name="confirmPassword" type="password"/>
+                            <TextField label="Confirm Password" name="confirmPassword" type="password" />
                             <div className='Login_buttons'>
                                 <button className="btn btn-dark mt-3" type="submit">Register</button>
                                 <button className="btn btn-danger mt-3 ml-3" type="reset">Reset</button>
