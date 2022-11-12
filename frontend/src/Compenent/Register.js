@@ -1,8 +1,8 @@
 import React from "react";
 import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
 import { TextField } from "./TextField";
 import axios from "axios";
+import { validateregister } from "./Login/Yupvalidation";
 
 export default function Register({ display }) {
 
@@ -19,19 +19,6 @@ export default function Register({ display }) {
         })
     }
 
-
-    const validate = Yup.object({
-        email: Yup.string()
-            .email('Email is invalid')
-            .required('Email is required'),
-        password: Yup.string()
-            .min(6, 'Password must be at least 6 charaters')
-            .required('Password is required'),
-        confirmPassword: Yup.string()
-            .oneOf([Yup.ref('password'), null], 'Password must match')
-            .required('Confirm password is required'),
-    })
-
     return (
         <div className={`Registration ${display ? null : 'display-deactive'}`}>
             <Formik
@@ -40,7 +27,7 @@ export default function Register({ display }) {
                     password: '',
                     confirmPassword: ''
                 }}
-                validationSchema={validate}
+                validationSchema={validateregister}
                 onSubmit={values => fetch(values)}
             >
                 {formik => (

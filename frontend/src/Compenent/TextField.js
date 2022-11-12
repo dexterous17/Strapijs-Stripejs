@@ -1,10 +1,10 @@
 import React from 'react';
 import { ErrorMessage, useField } from 'formik';
 
-export const TextField = ({ label, ...props }) => {
+export const TextField = ({ className, label, ...props }) => {
     const [field, meta] = useField(props);
     return (
-        <div className="mb-2">
+        <div className={className}>
             <div className='Login_labels'>
                 <label htmlFor={field.name}>{label}</label>
                 <ErrorMessage component="div" name={field.name} className="error" />

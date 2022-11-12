@@ -5,7 +5,7 @@ import CheckoutForm from '../Compenent/CheckoutFrom'
 import axios from "axios";
 import { useSelector } from "react-redux";
 import "../Style/Checkout.css";
-
+import token from '../Utils/Token'
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
 // This is your test publishable API key.
@@ -14,7 +14,6 @@ const stripePromise = loadStripe("pk_test_51Hps8SLAex9slWfOAXlFNdVr9OI4efh6l2dFk
 export default function Checkout() {
   const [clientSecret, setClientSecret] = useState();
   const Cartitems = useSelector(state => state.cartItems)
-  const token = localStorage.getItem('jwt')
   let headersList = {
     "Authorization": `Bearer  ${token}`,
     "Content-Type": "application/json"

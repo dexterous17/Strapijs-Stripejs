@@ -5,7 +5,12 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 import { removeuser } from "../../reducers/rootReducer";
 import MoonLoader from "react-spinners/MoonLoader";
-import { token } from "../../Utils/Token";
+import token from "../../Utils/Token";
+import { authget, authreceive } from "../../Utils/Requestoptions";
+import { Formik, Form } from "formik";
+import { TextField } from "../../Compenent/TextField";
+import { validatechangepassword } from '../../Compenent/Login/Yupvalidation'
+
 
 export default function Profile() {
 
@@ -29,23 +34,13 @@ export function Main({ handlelogout }) {
     const [data, setData] = useState()
 
     async function fetch() {
-        let headersList = {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-        }
-        let reqOptions = {
-            url: "https://dexterous17-strapijs-stripejs-7xx49gjw2wqr4-1338.githubpreview.dev/api/profilefetch",
-            method: "POST",
-            headers: headersList
-        }
-        await axios.request(reqOptions).then(function (response) {
+        await axios.request(authget('/api/profilefetch')).then(function (response) {
             changedata(setData, response)
         })
     }
 
     useEffect(() => {
         fetch()
-        console.log(data)
     }, [])
 
     if (!data) {
@@ -53,7 +48,8 @@ export function Main({ handlelogout }) {
     } else {
         return (
             <div className="Profile">
-                {!edit ? <Profiledata edit={edit} setEdit={setEdit} fetch={fetch} data={data} /> : <Changepassword edit={edit} setEdit={setEdit} fetch={fetch} data={data} setData={setData} />}
+                {!edit ? <Profiledata edit={edit} setEdit={setEdit} fetch={fetch} data={data} /> : <Editprofile edit={edit} setEdit={setEdit} fetch={fetch} data={data} setData={setData} />}
+                <Changepassword />
                 <div>
                     <button onClick={handlelogout}>Log out</button>
                 </div>
@@ -82,25 +78,66 @@ export function Profiledata({ edit, setEdit, data }) {
     )
 }
 
-export function Changepassword({ edit, setEdit, setData, data }) {
+export function Editprofile({ edit, setEdit, setData, data }) {
 
+    const [name, setname] = useState(data?.Name);
+    const [middlename, setmiddlename] = useState(data?.MiddleName);
+    const [lastname, setlastname] = useState(data?.LastName);
+    const [address, setaddress] = useState(data?.Address);
 
-
-    async function send({ name, middlename, lastname, address }) {
-        setData({ Name: name, MiddleName: middlename, LastName: lastname, Address: address })
-        await axios.get('https://dexterous17-strapijs-stripejs-7xx49gjw2wqr4-1338.githubpreview.dev/api/products?populate=*')
+    async function send() {
+        await axios.request(authreceive({ url: '/api/profileupdate', data: { Name: name, MiddleName: middlename, LastName: lastname, Address: address } })).then(function (response) {
+            changedata(setData, response)
+        })
     }
 
     return (
         <div className="Profiledata">
             <input type="button" onClick={() => changebox(edit, setEdit)} label="Edit" value="Edit" />
             <div>
-                <div><div>Name</div><input name='text' value={data?.Name} /></div>
-                <div><div>Middle Name</div><input type='text' value={data?.MiddleName} /></div>
-                <div><div>Last Name</div><input type='text' value={data?.LastName} /></div>
-                <div><div>Address</div><input type='text' value={data?.Address} /></div>
+                <div><div>Name</div><input name='text' value={name} onChange={(e) => setname(e.target.value)} /></div>
+                <div><div>Middle Name</div><input type='text' value={middlename} onChange={(e) => setmiddlename(e.target.value)} /></div>
+                <div><div>Last Name</div><input type='text' value={lastname} onChange={(e) => setlastname(e.target.value)} /></div>
+                <div><div>Address</div><input type='text' value={address} onChange={(e) => setaddress(e.target.value)} /></div>
                 <button onClick={send}>Save edit</button>
             </div>
         </div>
+    )
+}
+
+
+export function Changepassword() {
+
+    async function fetch(values) {
+        await axios.request(authreceive({ url: "/api/auth/change-password", data: { currentPassword: values.password, password: values.newpassword, passwordConfirmation: values.newpassword } }))
+            .then(function (response) {
+                localStorage.setItem('jwt', response.data.jwt)
+            })
+    }
+
+    return (
+        <Formik
+            initialValues={{
+                password: '',
+                confirmpassword: '',
+                newpassword: '',
+                confirmnewpassword: ''
+            }}
+            validationSchema={validatechangepassword}
+            onSubmit={values => fetch(values)}
+        >
+            {formik => (
+                <div>
+                    <h1 className="Changepassword_text">Change password</h1>
+                    <Form>
+                        <TextField className={'display-flex'} label="Current Password" name="password" type="password" />
+                        <TextField className={'display-flex'} label="Confirm Password" name="confirmpassword" type="password" />
+                        <TextField className={'display-flex'} label="New Password" name="newpassword" type="password" />
+                        <TextField className={'display-flex'} label="Confirm New Password" name="confirmnewpassword" type="password" />
+                        <button type="submit">Submit</button>
+                    </Form>
+                </div>
+            )}
+        </Formik>
     )
 }

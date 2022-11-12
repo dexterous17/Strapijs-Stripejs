@@ -1,8 +1,9 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+import token from '../Utils/Token'
+
 
 const Protectpage = (props) => {
-    const token = localStorage.getItem('jwt')
     if (!token) {
         return <Navigate to="/Login" replace={false} />
     } else {

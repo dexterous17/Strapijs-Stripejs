@@ -4,11 +4,11 @@ import axios from 'axios'
 import MoonLoader from "react-spinners/MoonLoader";
 import Success_product from "../Compenent/Success_product";
 import '../Style/Sucess.css'
+import token from "../Utils/Token";
 
 export default function Sucesss() {
     const search = useLocation().search;
     const payment_intent = new URLSearchParams(search).get("payment_intent");
-    const token = localStorage.getItem('jwt')
     const [order, setOrder] = useState()
 
     let headersList = {

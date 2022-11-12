@@ -1,2 +1,3 @@
-export let token = localStorage.getItem('jwt')
+let token = localStorage.getItem('jwt')
 
+export default token

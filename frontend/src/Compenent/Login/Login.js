@@ -1,13 +1,12 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import { TextField } from "./TextField";
+import { TextField } from "../TextField";
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { adduser } from "../reducers/rootReducer";
-import CheckFilled from "./CheckFilled";
-
+import { adduser } from "../../reducers/rootReducer";
+import CheckFilled from "../CheckFilled";
+import { validatelogin } from '../Login/Yupvalidation'
 
 export default function Login({ display }) {
 
@@ -30,14 +29,6 @@ export default function Login({ display }) {
     }
 
 
-    const validate = Yup.object({
-        email: Yup.string()
-            .email('Email is invalid')
-            .required('Email is required'),
-        password: Yup.string()
-            .min(6, 'Password must be at least 6 charaters')
-            .required('Password is required'),
-    })
 
     return (
         <div className="Login">
@@ -47,7 +38,7 @@ export default function Login({ display }) {
                     password: '',
                     toggle: false
                 }}
-                validationSchema={validate}
+                validationSchema={validatelogin}
                 onSubmit={values => fetch(values)}
             >
                 {formik => (

@@ -8,8 +8,11 @@ const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::profile.profile', (({ strapi }) => ({
     profileupdate: async (ctx) => {
-
-        return (ctx.status = 200)
+        const response = await strapi.db.query('api::profile.profile').update({
+            data: ctx.request.body,
+            where: { user: ctx.state.user.id }
+        })
+        return (ctx.body = response)
     },
     profilefetch: async (ctx) => {
         const response = await strapi.db.query('api::profile.profile').findOne({

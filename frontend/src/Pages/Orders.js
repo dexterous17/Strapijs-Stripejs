@@ -3,13 +3,14 @@ import axios from 'axios'
 import Order from "../Compenent/Order";
 import MoonLoader from "react-spinners/MoonLoader";
 import '../Style/Orders.css'
+import token from "../Utils/Token";
 
 
 export default function Orders() {
     const [orders, setOrders] = useState()
     useEffect(() => {
         let headersList = {
-            "Authorization": `Bearer  ${localStorage.getItem('jwt')}`,
+            "Authorization": `Bearer  ${token}`,
             "Content-Type": "application/json"
         }
         let reqOptions = {

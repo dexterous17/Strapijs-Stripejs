@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import "../Style/Auth.css"
-import Login from "../Compenent/Login";
+import Login from "../Compenent/Login/Login";
 import Register from "../Compenent/Register";
 import { Navigate } from "react-router-dom";
-
+import token from "../Utils/Token";
 export default function Auth() {
-    const token = localStorage.getItem('jwt')
     const [display, setDisplay] = useState(false);
 
 
