@@ -1,143 +1,154 @@
 import React, { useEffect, useState } from "react";
-import { changebox, changedata } from "./Profilefunctions";
 import axios from 'axios'
-import { Navigate, useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux'
-import { removeuser } from "../../reducers/rootReducer";
-import MoonLoader from "react-spinners/MoonLoader";
-import token from "../../Utils/Token";
+import { useNavigate, Navigate } from "react-router-dom";
 import { authget, authreceive } from "../../Utils/Requestoptions";
 import { Formik, Form } from "formik";
 import { TextField } from "../../Compenent/TextField";
-import { validatechangepassword } from '../../Compenent/Login/Yupvalidation'
-
+import { validatechangepassword } from '../../Utils/Yupvalidation'
+import { deleteFromStorage, useLocalStorage, writeStorage } from '@rehooks/local-storage';
+import { Button, Card, Spinner } from "@blueprintjs/core";
 
 export default function Profile() {
 
-    const dispatch = useDispatch()
+    const [token] = useLocalStorage('jwt')
+
+    if (token) {
+        return (<Main token={token} />)
+    } else { return <Navigate to="/" replace={false} /> }
+}
+
+
+
+export function Main() {
+    const [token] = useLocalStorage('jwt')
     const navigate = useNavigate();
 
+
     function handlelogout() {
-        dispatch(removeuser())
+        deleteFromStorage('jwt')
         navigate("/")
     }
 
-    if (token) {
-        return (<Main handlelogout={handlelogout} />)
-    } else { return (<Navigate to="/" replace={false} />) }
-}
-
-
-
-export function Main({ handlelogout }) {
-    const [edit, setEdit] = useState(false)
-    const [data, setData] = useState()
-
-    async function fetch() {
-        await axios.request(authget('/api/profilefetch')).then(function (response) {
-            changedata(setData, response)
-        })
-    }
-
-    useEffect(() => {
-        fetch()
-    }, [])
-
-    if (!data) {
-        return (<MoonLoader color="#008cff" cssOverride={{}} loading size={100} speedMultiplier={1} />)
-    } else {
-        return (
-            <div className="Profile">
-                {!edit ? <Profiledata edit={edit} setEdit={setEdit} fetch={fetch} data={data} /> : <Editprofile edit={edit} setEdit={setEdit} fetch={fetch} data={data} setData={setData} />}
-                <Changepassword />
-                <div>
-                    <button onClick={handlelogout}>Log out</button>
+    return (
+        <Card interactive={false} elevation={2}>
+            <div className="Profile  display-flex flex-direction">
+                <div className="box_1 display-flex justify-content-space-around">
+                    <Profiledata fetch={fetch} token={token} />
+                    <Changepassword token={token} />
+                </div>
+                <div className="box_2 display-flex justify-content">
+                    <Button text="Log out" intent="danger" onClick={handlelogout} />
                 </div>
             </div>
-        )
-    }
-}
-
-export function Profiledata({ edit, setEdit, data }) {
-
-    function changebox(edit) {
-        setEdit(!edit)
-        console.log(edit)
-    }
-
-    return (
-        <div className="Profiledata">
-            <input type="button" onClick={() => changebox(edit, setEdit)} name="Edit" value="Edit" />
-            <div>
-                <div><div>Name</div><input type='text' disabled value={data?.Name} readOnly /></div>
-                <div><div>Middle Name</div><input type='text' disabled value={data?.MiddleName} readOnly /></div>
-                <div><div>Last Name</div><input type='text' disabled value={data?.LastName} readOnly /></div>
-                <div><div>Address</div><input type='text' disabled value={data?.Address} readOnly /></div>
-            </div>
-        </div>
+        </Card>
     )
 }
 
-export function Editprofile({ edit, setEdit, setData, data }) {
+export function Profiledata() {
+    const [profiledata, setProfileData] = useState()
+    const [token] = useLocalStorage('jwt')
 
-    const [name, setname] = useState(data?.Name);
-    const [middlename, setmiddlename] = useState(data?.MiddleName);
-    const [lastname, setlastname] = useState(data?.LastName);
-    const [address, setaddress] = useState(data?.Address);
+    useEffect(() => {
+        async function fetch() {
+            await axios.request(authget({ url: '/api/profilefetch', token: token })).then(function (response) {
+                setProfileData({
+                    Name: response?.data?.Name,
+                    MiddleName: response?.data?.MiddleName,
+                    LastName: response?.data?.LastName,
+                    Address: response?.data?.Address
+                })
+            })
+        }
+        fetch()
+    }, [])
 
-    async function send() {
-        await axios.request(authreceive({ url: '/api/profileupdate', data: { Name: name, MiddleName: middlename, LastName: lastname, Address: address } })).then(function (response) {
-            changedata(setData, response)
-        })
+
+
+    return (
+        <Card interactive={true} elevation={2}>
+            {
+                profiledata ? <Profileform profiledata={profiledata} /> : <Spinner intent="primary" />
+            }
+        </Card>
+    )
+}
+
+
+
+export function Profileform(profiledata) {
+    const [disabled, setDisabled] = useState(true)
+    const [token] = useLocalStorage('jwt')
+
+    async function fetch(values) {
+        await axios.request(authreceive({ token: token, url: '/api/profileupdate', data: { Name: values.Name, MiddleName: values.MiddleName, LastName: values.LastName, Address: values.Address } }))
+    }
+
+    function handleClick() {
+        setDisabled(!disabled)
     }
 
     return (
-        <div className="Profiledata">
-            <input type="button" onClick={() => changebox(edit, setEdit)} label="Edit" value="Edit" />
-            <div>
-                <div><div>Name</div><input name='text' value={name} onChange={(e) => setname(e.target.value)} /></div>
-                <div><div>Middle Name</div><input type='text' value={middlename} onChange={(e) => setmiddlename(e.target.value)} /></div>
-                <div><div>Last Name</div><input type='text' value={lastname} onChange={(e) => setlastname(e.target.value)} /></div>
-                <div><div>Address</div><input type='text' value={address} onChange={(e) => setaddress(e.target.value)} /></div>
-                <button onClick={send}>Save edit</button>
-            </div>
-        </div>
+        <Formik
+            initialValues={profiledata.profiledata}
+            enableReinitialize={true}
+            onSubmit={values => fetch(values)}
+        >
+            {formik => (
+                <div>
+                    <div className={'display-flex justify-content-space-between align-items'}>
+                        <h1 className="Changepassword_text">Profile</h1>
+                        <Button text="Edit" onClick={handleClick} />
+                    </div>
+                    <Form>
+                        <TextField className={'display-flex justify-content-space-between'} label="Name" name="Name" type="text" disabled={disabled} />
+                        <TextField className={'display-flex justify-content-space-between'} label="Middle Name" name="MiddleName" type="text" disabled={disabled} />
+                        <TextField className={'display-flex justify-content-space-between'} label="Last Name" name="LastName" type="text" disabled={disabled} />
+                        <TextField className={'display-flex justify-content-space-between'} label="Address" name="Address" type="text" disabled={disabled} />
+                        <Button text="Submit" type="submit" disabled={disabled} />
+                    </Form>
+                </div>
+            )
+            }
+        </Formik >
     )
 }
 
 
 export function Changepassword() {
-
+    const [token] = useLocalStorage('jwt')
     async function fetch(values) {
-        await axios.request(authreceive({ url: "/api/auth/change-password", data: { currentPassword: values.password, password: values.newpassword, passwordConfirmation: values.newpassword } }))
+        await axios.request(authreceive({ token: token, url: "/api/auth/change-password", data: { currentPassword: values.password, password: values.newpassword, passwordConfirmation: values.newpassword } }))
             .then(function (response) {
-                localStorage.setItem('jwt', response.data.jwt)
-            })
+
+                writeStorage('jwt', response.data.jwt)
+            }).catch(err => console.log(err))
     }
 
     return (
-        <Formik
-            initialValues={{
-                password: '',
-                confirmpassword: '',
-                newpassword: '',
-                confirmnewpassword: ''
-            }}
-            validationSchema={validatechangepassword}
-            onSubmit={values => fetch(values)}
-        >
-            {formik => (
-                <div>
-                    <h1 className="Changepassword_text">Change password</h1>
-                    <Form>
-                        <TextField className={'display-flex'} label="Current Password" name="password" type="password" />
-                        <TextField className={'display-flex'} label="Confirm Password" name="confirmpassword" type="password" />
-                        <TextField className={'display-flex'} label="New Password" name="newpassword" type="password" />
-                        <TextField className={'display-flex'} label="Confirm New Password" name="confirmnewpassword" type="password" />
-                        <button type="submit">Submit</button>
-                    </Form>
-                </div>
-            )}
-        </Formik>
+        <Card interactive={true} elevation={2}>
+            <Formik
+                initialValues={{
+                    password: '',
+                    confirmpassword: '',
+                    newpassword: '',
+                    confirmnewpassword: ''
+                }}
+                validationSchema={validatechangepassword}
+                onSubmit={values => fetch(values)}
+            >
+                {formik => (
+                    <div>
+                        <h1 className="Changepassword_text">Change password</h1>
+                        <Form>
+                            <TextField className={'display-flex justify-content-space-between'} label="Current Password" name="password" type="password" />
+                            <TextField className={'display-flex justify-content-space-between'} label="Confirm Password" name="confirmpassword" type="password" />
+                            <TextField className={'display-flex justify-content-space-between'} label="New Password" name="newpassword" type="password" />
+                            <TextField className={'display-flex justify-content-space-between'} label="Confirm New Password" name="confirmnewpassword" type="password" />
+                            <Button text="Submit" type="submit" />
+                        </Form>
+                    </div>
+                )}
+            </Formik>
+        </Card>
     )
 }

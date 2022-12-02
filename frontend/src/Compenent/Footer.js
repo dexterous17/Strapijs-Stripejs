@@ -1,9 +1,10 @@
+import { Navbar } from "@blueprintjs/core";
 import React from "react";
 import '../Style/Footer.css'
 
 export default function Footer() {
   return (
-    <footer>
+    <Navbar className="footer">
       <div>
         About us
       </div>
@@ -13,6 +14,6 @@ export default function Footer() {
       <div>
         Privacy policy
       </div>
-    </footer>
+    </Navbar>
   );
 }

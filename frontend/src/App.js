@@ -7,13 +7,13 @@ import Cart from "./Pages/Cart";
 import Page404 from "./Pages/Page404";
 import Checkout from './Pages/Checkout'
 import Header from './Compenent/Header'
-import Footer from './Compenent/Footer'
 import Sucesss from "./Pages/Success";
 import './Style/App.css'
 import Orders from "./Pages/Orders";
 import Protectpage from "./Compenent/Protectpage";
 import Profile from "./Pages/Profile/Profile";
-
+import { Navbar } from "@blueprintjs/core";
+import '../src/Style/Footer.css'
 export default function App() {
   return (
     <>
@@ -34,5 +34,27 @@ export default function App() {
         <Footer />
       </Router>
     </>
+  );
+}
+
+
+export function Footer() {
+  return (
+    <Navbar className="footer" style={
+      {
+        position: "absolute",
+        marginTop: "10px"
+      }
+    }>
+      <div>
+        About us
+      </div>
+      <div>
+        Terms and conditions
+      </div>
+      <div>
+        Privacy policy
+      </div>
+    </Navbar>
   );
 }

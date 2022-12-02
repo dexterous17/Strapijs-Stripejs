@@ -3,6 +3,26 @@
 }
 
 
-.display-flex{
+.display-flex {
     display: flex;
+}
+
+.justify-content {
+    justify-content: center;
+}
+
+.flex-direction {
+    flex-direction: column;
+}
+
+.justify-content-space-around {
+    justify-content: space-around;
+}
+
+.justify-content-space-between {
+    justify-content: space-between;
+}
+
+.align-items {
+    align-items: center;
 }

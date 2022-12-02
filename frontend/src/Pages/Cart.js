@@ -1,15 +1,15 @@
+import { Button, Card } from "@blueprintjs/core";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Memocartitem } from "../Compenent/Memocartitem";
 import '../Style/Cart.css'
 export default function Cart() {
-
     const Cartitems = useSelector(state => state.cartItems)
-    console.log(Cartitems)
+
     if (Cartitems.length === 0) {
         return (
-            <div className="no_cart_item">No Item in Cart</div>
+            <Card className="no_cart_item">No Item in Cart</Card>
         )
     } else {
         return (
@@ -21,12 +21,13 @@ export default function Cart() {
                         })
                     }
                 </div>
-                <div className="cartitem-button" href="/Checkout">
+                <Button className="cartitem-button" href="/Checkout">
                     <Link to={'/Checkout'} >
                         Check out box
                     </Link>
-                </div>
+                </Button>
             </div >
         )
     }
 }
+

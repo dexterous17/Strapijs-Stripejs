@@ -1,31 +1,40 @@
+import { Card, Label } from "@blueprintjs/core"
 import React from "react"
-import '../Style/Order.css'
-import SuccessProductBulk from "./SucessProductBulk"
+import { Datefunction } from "../Utils/Date"
 
 export default function Order({ order }) {
     return (
-        <div className="Order_container">
-            <div className="Order_title">
-                <div>
+        <Card style={{ marginBottom: "5px", width: "300px" }}>
+            <Label style={{ display: "flex", marginBottom: "5px", justifyContent: "space-between" }}>
+                <Label style={{ marginBottom: "5px" }}>
                     ID {order.id}
-                </div>
-                <div>
-                    Date {order.updatedAt}
-                </div>
-            </div>
-            <div className="Order_main">
+                </Label>
+                <Label style={{ marginBottom: "5px" }}>
+                    Date {Datefunction(order.updatedAt)}
+                </Label>
+            </Label>
+            <Label style={{ display: "flex", justifyContent: "space-between", flexDirection: "column", marginBottom: "5px" }}>
                 {
                     order.ordersfromusers.map(product => { return (<SuccessProductBulk key={product?.id} product={product?.product} quantity={product?.quantity} />) })
                 }
-            </div>
-            <div className="Order_footer">
-                <div>
+            </Label>
+            <Label style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px" }}>
+                <Label style={{ marginBottom: "5px" }}>
                     Payment amount
-                </div>
-                <div>
+                </Label>
+                <Label style={{ marginBottom: "5px" }}>
                     $ {order.payment_amount / 100}
-                </div>
-            </div>
-        </div>
+                </Label>
+            </Label>
+        </Card>
+    )
+}
+
+const SuccessProductBulk = ({ product, quantity }) => {
+    return (
+        <Label style={{ display: "flex", justifyContent: "space-between", flexDirection: "row", marginBottom: "5px" }}>
+            <Label style={{ marginBottom: "5px" }}>Product Name : {product.Product_name}</Label>
+            <Label style={{ marginBottom: "5px" }}>X  {quantity}</Label>
+        </Label>
     )
 }

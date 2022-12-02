@@ -9,12 +9,12 @@ const { createCoreController } = require('@strapi/strapi').factories;
 module.exports = createCoreController('api::ordersfromuser.ordersfromuser', ({ strapi }) => ({
     findoneorder: async (ctx) => {
         const product = ctx.request.body;
-        console.log(product)
+        console.log(JSON.stringify(product))
         try {
             const data = await strapi.db.query('api::order.order')
                 .findOne({
                     where: {
-                        payment_intent: product.payment_intent,
+                        payment_intent: ctx.request.body.data,
                         payment_status: "payment_intent.succeeded",
                         user: ctx.state.user.id
                     }, populate: { ordersfromusers: { populate: { product: { populate: { Product_Image: { populate: { relation: true } } } } } } }
@@ -31,3 +31,4 @@ module.exports = createCoreController('api::ordersfromuser.ordersfromuser', ({ s
         }
     }
 }));
+//

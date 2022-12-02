@@ -74,11 +74,9 @@ module.exports = createCoreController('api::order.order', (({ strapi }) => ({
     } catch (e) {
       console.log(e.message)
     }
-  }, cancleorder: async (ctx) => {
-
   }, paymentIntentsccess: async (ctx) => {
 
-    console.log(ctx.request.body.data.object.id)
+    console.log(ctx.request.body.object.id)
 
     ctx.body = 'okay'
 

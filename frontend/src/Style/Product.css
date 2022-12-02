@@ -10,7 +10,6 @@ main {
 .Product {
     width: 280px;
     margin: 50px;
-    background: #a9cdcf;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

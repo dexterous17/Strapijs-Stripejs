@@ -1,25 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios'
 import Order from "../Compenent/Order";
-import MoonLoader from "react-spinners/MoonLoader";
 import '../Style/Orders.css'
-import token from "../Utils/Token";
-
-
+import { useLocalStorage } from '@rehooks/local-storage';
+import { authget } from "../Utils/Requestoptions";
+import { Spinner } from "@blueprintjs/core";
 export default function Orders() {
     const [orders, setOrders] = useState()
+    const [token] = useLocalStorage('jwt')
     useEffect(() => {
-        let headersList = {
-            "Authorization": `Bearer  ${token}`,
-            "Content-Type": "application/json"
-        }
-        let reqOptions = {
-            url: "https://dexterous17-strapijs-stripejs-7xx49gjw2wqr4-1338.githubpreview.dev/api/getmutipleorder",
-            method: "POST",
-            headers: headersList
-        }
         async function fetch() {
-            await axios.request(reqOptions)
+            await axios.request(authget({ url: '/api/getmutipleorder', token: token }))
                 .then((data) => {
                     setOrders(data.data.data)
                 });
@@ -39,17 +30,11 @@ export default function Orders() {
 
                 <div className="Orders_container">
                     {
-                        orders.map(order => { return (<Order order={order} />) })
+                        orders.map((order, _) => { return (<Order order={order} key={_} />) })
                     }
                 </div>
             )
         }
-    } else return (<MoonLoader
-        color="#008cff"
-        cssOverride={{}}
-        loading
-        size={100}
-        speedMultiplier={1}
-    />)
+    } else return <Spinner intent="primary" />
 
 }
