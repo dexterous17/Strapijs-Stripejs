@@ -1,7 +1,6 @@
 import React from "react";
 import "../Style/Header.css"
 import companylogo from '../Assets/Amazonlogo.png'
-import { AiOutlineUser } from 'react-icons/ai'
 import { BsCart } from 'react-icons/bs'
 import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux';

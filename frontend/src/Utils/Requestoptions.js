@@ -39,3 +39,31 @@ export const auth = ({ url, data }) => {
     }
     return reqOptions
 }
+
+
+export const authgetpro = ({ url, token }) => {
+    let headersList = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+    }
+    let reqOptions = {
+        url: `${URL}${url}`,
+        method: "GET",
+        headers: headersList,
+    }
+    return reqOptions
+}
+
+export const authput = ({ url, token,data }) => {
+    let headersList = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+    }
+    let reqOptions = {
+        url: `${URL}${url}`,
+        method: "PUT",
+        headers: headersList,
+        data:data
+    }
+    return reqOptions
+}

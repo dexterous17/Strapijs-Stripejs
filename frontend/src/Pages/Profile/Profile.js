@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios'
 import { useNavigate, Navigate } from "react-router-dom";
-import { authget, authreceive } from "../../Utils/Requestoptions";
+import { authput, authreceive,authgetpro } from "../../Utils/Requestoptions";
 import { Formik, Form } from "formik";
 import { TextField } from "../../Compenent/TextField";
 import { validatechangepassword } from '../../Utils/Yupvalidation'
@@ -50,12 +50,12 @@ export function Profiledata() {
 
     useEffect(() => {
         async function fetch() {
-            await axios.request(authget({ url: '/api/profilefetch', token: token })).then(function (response) {
+            await axios.request(authgetpro({ url: '/api/users/me', token: token })).then(function (response) {
                 setProfileData({
                     Name: response?.data?.Name,
                     MiddleName: response?.data?.MiddleName,
                     LastName: response?.data?.LastName,
-                    Address: response?.data?.Address
+                    Phonenumber:response?.data?.Phonenumber
                 })
             })
         }
@@ -80,7 +80,12 @@ export function Profileform(profiledata) {
     const [token] = useLocalStorage('jwt')
 
     async function fetch(values) {
-        await axios.request(authreceive({ token: token, url: '/api/profileupdate', data: { Name: values.Name, MiddleName: values.MiddleName, LastName: values.LastName, Address: values.Address } }))
+        await axios.request(authput({ token: token, url: '/api/user/me', data: { 
+            Name: values?.Name,
+            MiddleName: values?.MiddleName,
+            LastName: values?.LastName,
+            Phonenumber:values?.Phonenumber 
+        } }))
     }
 
     function handleClick() {
@@ -103,7 +108,7 @@ export function Profileform(profiledata) {
                         <TextField className={'display-flex justify-content-space-between'} label="Name" name="Name" type="text" disabled={disabled} />
                         <TextField className={'display-flex justify-content-space-between'} label="Middle Name" name="MiddleName" type="text" disabled={disabled} />
                         <TextField className={'display-flex justify-content-space-between'} label="Last Name" name="LastName" type="text" disabled={disabled} />
-                        <TextField className={'display-flex justify-content-space-between'} label="Address" name="Address" type="text" disabled={disabled} />
+                        <TextField className={'display-flex justify-content-space-between'} label="Phone" name="Phonenumber" type="text" disabled={disabled} />
                         <Button text="Submit" type="submit" disabled={disabled} />
                     </Form>
                 </div>
@@ -111,7 +116,7 @@ export function Profileform(profiledata) {
             }
         </Formik >
     )
-}
+} 
 
 
 export function Changepassword() {

@@ -74,6 +74,25 @@
       "relation": "oneToMany",
       "target": "api::ordersfromuser.ordersfromuser",
       "mappedBy": "user"
+    },
+    "Name": {
+      "type": "string"
+    },
+    "Phonenumber": {
+      "type": "integer",
+      "default": 0
+    },
+    "LastName": {
+      "type": "string"
+    },
+    "MiddleName": {
+      "type": "string"
+    },
+    "addresses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::address.address",
+      "mappedBy": "users_permissions_user"
     }
   }
 }
